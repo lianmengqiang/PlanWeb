@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXUS · AI 学习周报</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- 封面登录 -->
+  <section id="login-gate" class="login-gate" aria-labelledby="login-brand">
+    <div class="login-ambient" aria-hidden="true"></div>
+    <div class="login-grid" aria-hidden="true"></div>
+    <div class="login-shell">
+      <div class="login-copy">
+        <p class="login-kicker">NEXUS INTELLIGENCE LAB</p>
+        <h1 id="login-brand" class="login-brand">AI 学习周报</h1>
+        <p class="login-lead">
+          每位研发独立登录、填写与沉淀。工具可选热门 AI 栈，领导审阅一键完成。
+        </p>
+        <ul class="login-points">
+          <li>个人空间互不干扰</li>
+          <li>热门 AI 工具一键选用</li>
+          <li>周报生成 · 打分批阅 · 历史回看</li>
+        </ul>
+      </div>
+
+      <form id="login-form" class="login-card" novalidate>
+        <h2 class="login-card-title">进入工作台</h2>
+        <p class="login-card-sub">输入姓名即可开始填写，数据保存在本机浏览器</p>
+
+        <div class="field">
+          <label for="login-name">姓名</label>
+          <input
+            id="login-name"
+            name="name"
+            type="text"
+            placeholder="例如：张三"
+            required
+            autocomplete="name"
+          />
+        </div>
+
+        <div class="field">
+          <label for="login-team">团队 / 岗位（可选）</label>
+          <input
+            id="login-team"
+            name="team"
+            type="text"
+            placeholder="例如：平台研发 / AI 应用组"
+            autocomplete="organization"
+          />
+        </div>
+
+        <p id="login-error" class="form-error" hidden></p>
+
+        <button type="submit" class="btn btn-primary btn-block">进入系统</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- 主工作台 -->
+  <div id="app-shell" class="page is-hidden" hidden>
+    <header class="hero">
+      <div class="hero-top">
+        <div>
+          <p class="hero-kicker">NEXUS INTELLIGENCE LAB</p>
+          <h1 class="brand">AI 学习周报</h1>
+          <p class="tagline">科技研发周报工作台 · 提交 · 审阅 · 沉淀</p>
+        </div>
+        <div class="user-chip">
+          <div class="user-chip-text">
+            <span id="user-name-label" class="user-name">—</span>
+            <span id="user-team-label" class="user-team"></span>
+          </div>
+          <button type="button" id="btn-logout" class="btn btn-ghost">退出</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <form id="report-form" class="form tech-panel" novalidate>
+        <div class="panel-head">
+          <h2 class="panel-title">研发录入</h2>
+          <span class="panel-badge">SUBMIT</span>
+        </div>
+
+        <div class="field">
+          <label for="project-select">学习项目</label>
+          <div class="project-combo">
+            <select id="project-select" name="projectSelect" aria-label="选择热门 AI 工具">
+              <option value="">选择热门 AI 工具</option>
+              <option value="Cursor">Cursor</option>
+              <option value="ChatGPT">ChatGPT</option>
+              <option value="Claude">Claude</option>
+              <option value="Gemini">Gemini</option>
+              <option value="GitHub Copilot">GitHub Copilot</option>
+              <option value="LangChain">LangChain</option>
+              <option value="RAG 应用">RAG 应用</option>
+              <option value="Agent 工作流">Agent 工作流</option>
+              <option value="Midjourney">Midjourney</option>
+              <option value="DALL·E">DALL·E</option>
+              <option value="开源大模型微调">开源大模型微调</option>
+              <option value="__custom__">其他（自定义输入）</option>
+            </select>
+            <input
+              id="project"
+              name="project"
+              type="text"
+              placeholder="可直接输入，或从上方选择热门工具"
+              required
+              autocomplete="off"
+            />
+          </div>
+          <div id="project-chips" class="project-chips" aria-label="热门工具快捷选择"></div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="period">学习周期</label>
+            <input
+              id="period"
+              name="period"
+              type="text"
+              placeholder="例如：2026-03-10 ~ 2026-03-16"
+              required
+              autocomplete="off"
+            />
+          </div>
+          <div class="field field-progress">
+            <label for="progress">完成情况</label>
+            <div class="progress-row">
+              <input
+                id="progress"
+                name="progress"
+                type="number"
+                min="0"
+                max="100"
+                step="1"
+                value="80"
+                required
+              />
+              <span class="progress-unit">%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="content">学习内容</label>
+          <textarea
+            id="content"
+            name="content"
+            rows="6"
+            placeholder="可多行填写要点，生成时会自动提炼成周报段落"
+            required
+          ></textarea>
+        </div>
+
+        <p id="form-error" class="form-error" hidden></p>
+
+        <div class="actions">
+          <button type="submit" id="btn-generate" class="btn btn-primary">
+            生成周报
+          </button>
+          <button type="button" id="btn-copy" class="btn btn-secondary" disabled>
+            一键复制
+          </button>
+        </div>
+      </form>
+
+      <section class="result tech-panel" aria-live="polite">
+        <div class="panel-head">
+          <h2 class="panel-title">生成结果</h2>
+          <span class="panel-badge">OUTPUT</span>
+        </div>
+        <div id="report-output" class="result-body is-empty">
+          填写左侧信息后点击「生成周报」
+        </div>
+      </section>
+    </main>
+
+    <section class="review tech-panel" id="leader-review" aria-labelledby="review-heading">
+      <div class="review-header">
+        <div class="panel-head">
+          <h2 id="review-heading" class="panel-title">领导者审阅</h2>
+          <span class="panel-badge">REVIEW</span>
+        </div>
+        <p class="review-hint">可依据完成度一键打分，并自动生成批阅评价</p>
+      </div>
+
+      <div class="review-grid">
+        <div class="field field-score">
+          <div class="field-label-row">
+            <label for="leader-score">打分</label>
+            <button type="button" id="btn-auto-score" class="btn btn-tiny" disabled>
+              一键打分
+            </button>
+          </div>
+          <div class="progress-row score-row">
+            <input
+              id="leader-score"
+              name="leaderScore"
+              type="number"
+              min="0"
+              max="100"
+              step="1"
+              placeholder="0–100"
+              disabled
+            />
+            <span class="progress-unit">分</span>
+          </div>
+        </div>
+
+        <div class="field field-comment">
+          <div class="field-label-row">
+            <label for="leader-comment">评价</label>
+            <button type="button" id="btn-auto-comment" class="btn btn-tiny" disabled>
+              自动生成评价
+            </button>
+          </div>
+          <textarea
+            id="leader-comment"
+            name="leaderComment"
+            rows="4"
+            placeholder="生成周报后可一键批阅，也可手动填写评价"
+            disabled
+          ></textarea>
+        </div>
+      </div>
+
+      <p id="review-error" class="form-error" hidden></p>
+    </section>
+
+    <section class="history tech-panel" id="history-section" aria-labelledby="history-heading">
+      <div class="history-header">
+        <div>
+          <div class="panel-head">
+            <h2 id="history-heading" class="panel-title">历史记录</h2>
+            <span class="panel-badge">ARCHIVE</span>
+          </div>
+          <p class="review-hint">仅显示当前登录用户的周报与领导评价</p>
+        </div>
+        <button type="button" id="btn-clear-history" class="btn btn-ghost">
+          清空历史
+        </button>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </section>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/report.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
